@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Login</title>
+
+<style>
+body {
+    height: 100vh;
+    background-image: url("bgimage.png");
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial;
+}
+
+.login-box {
+            text-align: center;
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 50px 80px;
+            width: 300px;
+            border-radius: 10px;
+}
+
+input, button {
+    width: 80%;
+    padding: 10px;
+    margin-top: 8px;
+}
+
+button {
+    background: #1a73e8;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#msg {
+    margin-top: 10px;
+    color: red;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="login-box">
+
+<h2>Login</h2>
+
+<input type="text" id="userid" placeholder="Username">
+<input type="password" id="password" placeholder="Password">
+
+<button onclick="login()">Login</button>
+
+<p id="msg"></p>
+<a href="forgot.html">Forgot Password?</a>
+<div id="resetBox" style="display:none; margin-top:15px;">
+    <input type="text" id="resetUser" placeholder="Enter Username"><br><br>
+    <input type="password" id="newPass" placeholder="Enter New Password"><br><br>
+    <button onclick="resetPassword()">Reset Password</button>
+	<p id="resetMsg" style="color:red;"></p>
+
+</div>
+
+<script>
+
+function login(){
+
+var user = document.getElementById("userid").value.trim();
+var pass = document.getElementById("password").value.trim();
+
+if(user==="" || pass===""){
+alert("Enter username and password");
+return;
+}
+
+fetch("https://script.google.com/macros/s/AKfycbxpRs5sCUFm17AHUukiB5kCTja9_wKZ5gER5DkO9ZrPqkFoj59WrnxAj36U2tws0P31/exec", {
+
+method: "POST",
+
+body: new URLSearchParams({
+
+login: "true",
+username: user,
+password: pass
+
+})
+
+})
+
+.then(res => res.text())
+
+.then(function(response){
+
+console.log(response);
+
+if(response.trim() === "SUCCESS"){
+
+
+localStorage.setItem("loggedInUser", user);
+alert("Login success");  
+
+window.location.assign("Recruitment.html");
+
+}
+else{
+
+document.getElementById("msg").innerText="Invalid Username or Password";
+
+}
+
+})
+
+.catch(function(error){
+
+console.log(error);
+
+document.getElementById("msg").innerText="Login failed";
+
+});
+
+}
+function showReset(){
+    document.getElementById("resetBox").style.display = "block";
+}
+
+function resetPassword(){
+
+var user = document.getElementById("resetUser").value.trim();
+var newPass = document.getElementById("newPass").value.trim();
+
+if(user==="" || newPass===""){
+    document.getElementById("resetMsg").innerText="Enter username and new password";
+    return;
+}
+
+fetch("https://script.google.com/macros/s/AKfycbxpRs5sCUFm17AHUukiB5kCTja9_wKZ5gER5DkO9ZrPqkFoj59WrnxAj36U2tws0P31/exec", {
+
+method: "POST",
+
+body: new URLSearchParams({
+
+reset: "true",
+username: user,
+password: newPass
+
+})
+
+})
+
+.then(res => res.text())
+.then(function(response){
+
+if(response.trim() === "SUCCESS"){
+    document.getElementById("resetMsg").style.color="green";
+    document.getElementById("resetMsg").innerText="Password updated successfully";
+}
+else{
+    document.getElementById("resetMsg").innerText="Username not found";
+}
+
+})
+.catch(function(error){
+
+document.getElementById("resetMsg").innerText="Reset failed";
+
+});
+
+}
+
+
+</script>
+
+</body>
+</html>
