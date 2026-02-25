@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recruitment Form</title>
+
+<style>
+body{
+    font-family: "Segoe UI", Arial, sans-serif;
+    background:#5a9bf3;
+    margin:0;
+    padding:30px;
+}
+
+h1{
+    text-align:center;
+    color:#fff;
+    margin-bottom:25px;
+}
+
+form{
+    background:#ffffff;
+    max-width:1200px;
+    margin:auto;
+    padding:30px;
+    border-radius:12px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.15);
+}
+
+.section-title{
+    color:#1a73e8;
+    font-size:18px;
+    font-weight:600;
+    margin:25px 0 10px;
+    border-bottom:2px solid #1a73e8;
+    padding-bottom:5px;
+}
+
+.form-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:20px;
+}
+
+.form-group{
+    flex:1 1 30%;
+    display:flex;
+    flex-direction:column;
+}
+
+.form-group label{
+    font-size:14px;
+    font-weight:600;
+    color:#333;
+    margin-bottom:10px;
+}
+
+.form-group label span{
+    color:red;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+    padding:10px 12px;
+    border:1px solid #b3c7ff;
+    border-radius:8px;
+    font-size:14px;
+    background:#e8f1ff;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+    outline:none;
+    border-color:#1a73e8;
+    background:#fff;
+    box-shadow:0 0 6px rgba(26,115,232,0.3);
+}
+
+textarea{
+    resize:vertical;
+    min-height:70px;
+}
+
+.submit-box{
+    text-align:center;
+    margin-top:30px;
+}
+
+button{
+    background:#1a73e8;
+    color:#fff;
+    border:none;
+    padding:14px 40px;
+    font-size:16px;
+    font-weight:600;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#155ab6;
+}
+.recruiter-field{
+    flex:1 1 30%;
+}
+
+@media(max-width:900px){
+    .form-group{flex:1 1 45%;}
+}
+
+@media(max-width:600px){
+    .form-group{flex:1 1 100%;}
+}
+
+input[name="recruiter"]{
+    width:200px;
+}
+.table-scroll{
+    width:100%;
+    max-width:100%;
+    height:150px;          
+    overflow-x:auto;       
+    overflow-y:auto;       
+    border:1px solid #ccc;
+}
+
+#dataTable{
+    border-collapse:collapse;
+    background:white;
+    min-width:1700px;      
+}
+
+#dataTable th,
+#dataTable td{
+    border:1px solid #ccc;
+    padding:8px;
+    white-space:nowrap;
+}
+
+#dataTable thead th{
+    position:sticky;
+    top:0;
+    background:#1a73e8;
+    color:white;
+}
+
+
+
+</style>
+</head>
+
+<body>
+
+<h1>Recruitment Form</h1>
+<div  id="searchSection" style="
+max-width:1200px;
+margin:auto;
+background:white;
+padding:20px;
+border-radius:12px;
+margin-bottom:20px;
+">
+
+<label style="font-weight:bold;">Search Candidates:</label>
+
+<input 
+type="text" 
+id="searchBox"
+placeholder="Search"
+onkeyup="filterTable()"
+style="
+width:80%;
+padding:10px;
+margin-top:10px;
+border-radius:8px;
+border:1px solid #1a73e8;
+"
+>
+<br><br>
+
+<label><b>From Date:</b></label>
+<input type="text" id="fromDate" placeholder="MM/DD/YYYY" onkeyup="filterTable()">
+
+<label style="margin-left:20px;"><b>To Date:</b></label>
+<input type="text" id="toDate" placeholder="MM/DD/YYYY" onkeyup="filterTable()">
+
+<div class="table-scroll">
+
+<table id="dataTable" style="display:none;">
+<thead>
+<tr>
+<th>ID</th>
+<th>First Name</th>
+<th>Last Name</th>
+<th>Mobile</th>
+<th>Email</th>
+<th>Country</th>
+<th>State</th>
+<th>City</th>
+<th>ZIP</th>
+<th>Job ID</th>
+<th>Job Title</th>
+<th>Client</th>
+<th>Industry</th>
+<th>Visa</th>
+<th>Employment</th>
+<th>Recruiter</th>
+<th>Pay Rate</th>
+<th>Bill Rate</th>
+<th>Experience</th>
+<th>Primary Skills</th>
+<th>Secondary Skills</th>
+<th>Submitted Date</th>
+<th>Status</th>
+<th>Interview Date</th>
+<th>Feedback</th>
+<th>Note</th>
+</tr>
+</thead>
+
+<tbody id="tableBody"></tbody>
+
+</table>
+
+</div>
+
+
+<tbody id="tableBody"></tbody>
+
+</table>
+
+</div>
+
+
+
+<form
+  action="https://script.google.com/macros/s/AKfycbxpRs5sCUFm17AHUukiB5kCTja9_wKZ5gER5DkO9ZrPqkFoj59WrnxAj36U2tws0P31/exec"
+  method="POST">
+
+
+<div class="section-title">Personal Information</div>
+<div class="form-row">
+
+<div class="form-group">
+    <label>Candidate ID <span>*</span></label>
+    <input type="text"  id="candidateId" readonly required>
+</div>
+
+<div class="form-group">
+    <label>First Name <span>*</span></label>
+    <input type="text" name="firstName" required>
+</div>
+
+<div class="form-group">
+    <label>Last Name <span>*</span></label>
+    <input type="text" name="lastName" required>
+</div>
+
+<div class="form-group">
+    <label>Mobile No <span>*</span></label>
+    <input type="tel" name="mobile" required>
+</div>
+
+<div class="form-group">
+    <label>Email <span>*</span></label>
+    <input type="email" name="email" required>
+</div>
+
+<div class="form-group">
+    <label>Country <span>*</span></label>
+    <select name="country" id="country" required onchange="updateStates()">
+        <option value="">Select Country</option>
+        <option value="USA">United States</option>
+        <option value="Canada">Canada</option>
+    </select>
+</div>
+
+<div class="form-group">
+    <label>State <span>*</span></label>
+    <select id="state" name="state"onchange="updateCities()" required>
+        <option value="">Select State</option>
+    </select>
+</div>
+
+<div class="form-group">
+    <label>City <span>*</span></label>
+    <select id="city" name="city" required>
+    <option value="">Select City</option>
+</select>
+</div>
+
+<div class="form-group">
+    <label>Zip Code</label>
+    <input type="text" name="zip">
+</div>
+
+</div>
+
+
+<div class="section-title">Job Information</div>
+<div class="form-row">
+
+<div class="form-group">
+    <label>Job ID</label>
+    <input type="text" name="jobId">
+</div>
+
+<div class="form-group">
+    <label>Job Title <span>*</span></label>
+    <input type="text" name="jobTitle" required>
+</div>
+
+<div class="form-group">
+    <label>Client <span>*</span></label>
+    <input type="text" name="client" required>
+</div>
+
+<div class="form-group">
+    <label>Industry / Domain</label>
+    <input type="text" name="industry">
+</div>
+
+<div class="form-group">
+    <label>Visa <span>*</span></label>
+    <select name="visa" required>
+        <option value="">Select Status</option>
+        <option>H1B</option>
+        <option>OPT</option>
+        <option>CPT</option>
+        <option>Green Card</option>
+        <option>Citizen</option>
+        <option>Others</option>
+    </select>
+</div>
+
+<div class="form-group">
+    <label>Employment Type</label>
+    <select name="employmentType">
+        <option value="">Select</option>
+        <option>W2</option>
+        <option>C2C</option>
+        <option>1099</option>
+        <option>Others</option>
+    </select>
+</div>
+
+<div class="form-group recruiter-field">
+    <label>Recruiter <span>*</span></label>
+    <input type="text" name="recruiter" required>
+</div>
+
+</div>
+
+
+<div class="section-title">Rates & Skills</div>
+<div class="form-row">
+
+<div class="form-group">
+    <label>Pay Rate</label>
+    <input type="text" name="payRate">
+</div>
+
+<div class="form-group">
+    <label>Bill Rate</label>
+    <input type="text" name="billRate">
+</div>
+
+<div class="form-group">
+    <label>Total Experience</label>
+<select id="experience" name="experience">
+    <option value="">Select Years</option>
+    <script>
+        for(let i = 0; i <= 20; i++){
+            document.write(`<option value="${i}">${i}</option>`);
+        }
+    </script>
+</select>
+</div>
+
+<div class="form-group">
+    <label>Primary Skills</label>
+<input type="text" name="primarySkills" id="primarySkills" list="courseList" placeholder="Type py...">
+
+<datalist id="courseList">
+  <option value="Python">
+  <option value="PyTorch">
+  <option value="Pyramid">
+  <option value="Java">
+  <option value="C++">
+</datalist>
+
+</div>
+
+<div class="form-group">
+    <label>Secondary Skills</label>
+    <input type="text" name="secondarySkills">
+</div>
+
+</div>
+
+
+<div class="section-title">Submission & Interview</div>
+<div class="form-row">
+
+<div class="form-group">
+    <label>Submitted Date <span>*</span></label>
+    <input type="date" id="submittedDate" name="submittedDate" required>
+</div>
+
+<div class="form-group">
+    <label>Submission Status</label>
+    <select name="submissionStatus" id="submissionStatus">
+    <option value="">Select Status</option>
+    <option value="Pending">Pending</option>
+    <option value="Submitted">Submitted</option>
+    <option value="Approved">Approved</option>
+    <option value="Rejected">Rejected</option>
+</select>
+
+</div>
+
+<div class="form-group">
+    <label>Interview Schedule Date</label>
+    <input type="date" name="interviewDate">
+</div>
+
+<div class="form-group">
+    <label>Interview Feedback</label>
+    <textarea name="interviewFeedback"></textarea>
+</div>
+
+<div class="form-group" style="flex:1 1 100%;">
+    <label>Note</label>
+    <textarea name="note"></textarea>
+</div>
+
+</div>
+
+<div class="submit-box">
+    <button type="submit">Submit</button>
+</div>
+
+</form>
+
+<script>
+const countryStateMap = {
+    USA: [
+    "Alabama","Alaska","Arizona","Arkansas","California","Colorado",
+    "Connecticut","Delaware","Florida","Georgia","Hawaii","Idaho",
+    "Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana",
+    "Maine","Maryland","Massachusetts","Michigan","Minnesota",
+    "Mississippi","Missouri","Montana","Nebraska","Nevada",
+    "New Hampshire","New Jersey","New Mexico","New York",
+    "North Carolina","North Dakota","Ohio","Oklahoma","Oregon",
+    "Pennsylvania","Rhode Island","South Carolina","South Dakota",
+    "Tennessee","Texas","Utah","Vermont","Virginia","Washington",
+    "West Virginia","Wisconsin","Wyoming"
+  ],
+  
+  Canada: [
+  "Alberta",
+  "British Columbia",
+  "Manitoba",
+  "New Brunswick",
+  "Newfoundland and Labrador",
+  "Nova Scotia",
+  "Ontario",
+  "Prince Edward Island",
+  "Quebec",
+  "Saskatchewan",
+  "Northwest Territories",
+  "Nunavut",
+  "Yukon"
+]
+};
+const cityMap = {
+USA: {
+  Alabama: ["Birmingham","Montgomery","Mobile","Huntsville","Tuscaloosa"],
+  Alaska: ["Anchorage","Fairbanks","Juneau","Sitka","Ketchikan"],
+  Arizona: ["Phoenix","Tucson","Mesa","Chandler","Scottsdale"],
+  Arkansas: ["Little Rock","Fort Smith","Fayetteville","Springdale","Jonesboro"],
+  California: ["Los Angeles","San Diego","San Jose","San Francisco","Sacramento"],
+  Colorado: ["Denver","Colorado Springs","Aurora","Fort Collins","Boulder"],
+  Connecticut: ["Bridgeport","New Haven","Hartford","Stamford","Waterbury"],
+  Delaware: ["Wilmington","Dover","Newark","Middletown","Smyrna"],
+  Florida: ["Jacksonville","Miami","Tampa","Orlando","St. Petersburg"],
+  Georgia: ["Atlanta","Augusta","Columbus","Savannah","Athens"],
+  Hawaii: ["Honolulu","Hilo","Kailua","Kapolei","Kaneohe"],
+  Idaho: ["Boise","Meridian","Nampa","Idaho Falls","Pocatello"],
+  Illinois: ["Chicago","Aurora","Naperville","Joliet","Rockford"],
+  Indiana: ["Indianapolis","Fort Wayne","Evansville","South Bend","Carmel"],
+  Iowa: ["Des Moines","Cedar Rapids","Davenport","Sioux City","Iowa City"],
+  Kansas: ["Wichita","Overland Park","Kansas City","Topeka","Olathe"],
+  Kentucky: ["Louisville","Lexington","Bowling Green","Owensboro","Covington"],
+  Louisiana: ["New Orleans","Baton Rouge","Shreveport","Lafayette","Lake Charles"],
+  Maine: ["Portland","Lewiston","Bangor","South Portland","Auburn"],
+  Maryland: ["Baltimore","Frederick","Rockville","Gaithersburg","Annapolis"],
+  Massachusetts: ["Boston","Worcester","Springfield","Lowell","Cambridge"],
+  Michigan: ["Detroit","Grand Rapids","Warren","Sterling Heights","Lansing"],
+  Minnesota: ["Minneapolis","Saint Paul","Rochester","Duluth","Bloomington"],
+  Mississippi: ["Jackson","Gulfport","Southaven","Biloxi","Hattiesburg"],
+  Missouri: ["Kansas City","Saint Louis","Springfield","Columbia","Independence"],
+  Montana: ["Billings","Missoula","Great Falls","Bozeman","Helena"],
+  Nebraska: ["Omaha","Lincoln","Bellevue","Grand Island","Kearney"],
+  Nevada: ["Las Vegas","Henderson","Reno","North Las Vegas","Sparks"],
+  "New Hampshire": ["Manchester","Nashua","Concord","Dover","Rochester"],
+  "New Jersey": ["Newark","Jersey City","Paterson","Elizabeth","Trenton"],
+  "New Mexico": ["Albuquerque","Las Cruces","Rio Rancho","Santa Fe","Roswell"],
+  "New York": ["New York City","Buffalo","Rochester","Yonkers","Syracuse"],
+  "North Carolina": ["Charlotte","Raleigh","Greensboro","Durham","Winston-Salem"],
+  "North Dakota": ["Fargo","Bismarck","Grand Forks","Minot","West Fargo"],
+  Ohio: ["Columbus","Cleveland","Cincinnati","Toledo","Akron"],
+  Oklahoma: ["Oklahoma City","Tulsa","Norman","Broken Arrow","Lawton"],
+  Oregon: ["Portland","Salem","Eugene","Gresham","Hillsboro"],
+  Pennsylvania: ["Philadelphia","Pittsburgh","Allentown","Erie","Reading"],
+  "Rhode Island": ["Providence","Warwick","Cranston","Pawtucket","East Providence"],
+  "South Carolina": ["Columbia","Charleston","North Charleston","Greenville","Spartanburg"],
+  "South Dakota": ["Sioux Falls","Rapid City","Aberdeen","Brookings","Watertown"],
+  Tennessee: ["Nashville","Memphis","Knoxville","Chattanooga","Clarksville"],
+  Texas: ["Houston","San Antonio","Dallas","Austin","Fort Worth"],
+  Utah: ["Salt Lake City","West Valley City","Provo","West Jordan","Orem"],
+  Vermont: ["Burlington","South Burlington","Rutland","Barre","Montpelier"],
+  Virginia: ["Virginia Beach","Norfolk","Chesapeake","Richmond","Newport News"],
+  Washington: ["Seattle","Spokane","Tacoma","Vancouver","Bellevue"],
+  "West Virginia": ["Charleston","Huntington","Morgantown","Parkersburg","Wheeling"],
+  Wisconsin: ["Milwaukee","Madison","Green Bay","Kenosha","Racine"],
+  Wyoming: ["Cheyenne","Casper","Laramie","Gillette","Rock Springs"]
+},
+
+  Canada: {
+    Ontario: ["Toronto","Ottawa","Mississauga"],
+    Alberta: ["Calgary","Edmonton","Red Deer"]
+  }
+};
+
+function updateStates(){
+    const country = document.getElementById("country").value;
+    const state = document.getElementById("state");
+    state.innerHTML = '<option value="">Select State</option>';
+    if(!countryStateMap[country]) return;
+    countryStateMap[country].forEach(s=>{
+        const opt = document.createElement("option");
+        opt.value = s;
+        opt.textContent = s;
+        state.appendChild(opt);
+    });
+}
+function updateCities(){
+    const country = document.getElementById("country").value;
+    const state = document.getElementById("state").value;
+    const city = document.getElementById("city");
+
+    city.innerHTML = '<option value="">Select City</option>';
+
+    if(!cityMap[country] || !cityMap[country][state]) return;
+
+    cityMap[country][state].forEach(c=>{
+        const opt = document.createElement("option");
+        opt.value = c;
+        opt.textContent = c;
+        city.appendChild(opt);
+    });
+}
+
+window.addEventListener("load", function () {
+    const now = new Date();
+    const random = Math.floor(1000 + Math.random() * 9000);
+
+    const id = "CAND" +
+        now.getFullYear() +
+        String(now.getMonth()+1).padStart(2,'0') +
+        String(now.getDate()).padStart(2,'0') +
+        random;
+
+    document.getElementById("candidateId").value = id;
+});
+
+
+let allData = [];
+
+const API_URL = "https://script.google.com/macros/s/AKfycbxpRs5sCUFm17AHUukiB5kCTja9_wKZ5gER5DkO9ZrPqkFoj59WrnxAj36U2tws0P31/exec";
+
+fetch(API_URL)
+.then(res => res.json())
+.then(data => {
+    console.log(data); // check in console
+    allData = data;
+});
+
+function formatUS(dateString){
+    if(!dateString) return "";
+
+    const d = new Date(dateString);
+    return (d.getMonth()+1) + "/" + d.getDate() + "/" + d.getFullYear();
+}
+function filterTable(){
+
+    const search = document
+        .getElementById("searchBox")
+        .value
+        .toLowerCase()
+        .trim();
+
+    const fromValue = document.getElementById("fromDate").value;
+    const toValue = document.getElementById("toDate").value;
+
+    const fromDate = convertUSToDate(fromValue);
+    const toDate = convertUSToDate(toValue);
+
+    const table = document.getElementById("dataTable");
+    const body = document.getElementById("tableBody");
+
+    body.innerHTML = "";
+
+    if(search === "" && !fromDate && !toDate){
+        table.style.display = "none";
+        return;
+    }
+
+    const filtered = allData.filter(row => {
+
+        // 🔎 Search Match
+        const matchesSearch = Object.values(row).some(value =>
+            value && value.toString().toLowerCase().includes(search)
+        );
+
+        // 📅 Date Match
+        let matchesDate = true;
+
+        if(row.submittedDate){
+            const rowDate = new Date(row.submittedDate);
+
+            if(fromDate && rowDate < fromDate){
+                matchesDate = false;
+            }
+
+            if(toDate && rowDate > toDate){
+                matchesDate = false;
+            }
+        }
+
+        return matchesSearch && matchesDate;
+    });
+
+    if(filtered.length === 0){
+        table.style.display = "none";
+        return;
+    }
+
+    table.style.display = "table";
+
+    filtered.forEach(row => {
+
+        const tr = document.createElement("tr");
+
+        tr.innerHTML = `
+<td>${row.candidateId || ""}</td>
+<td>${row.firstName || ""}</td>
+<td>${row.lastName || ""}</td>
+<td>${row.mobile || ""}</td>
+<td>${row.email || ""}</td>
+<td>${row.country || ""}</td>
+<td>${row.state || ""}</td>
+<td>${row.city || ""}</td>
+<td>${row.zip || ""}</td>
+<td>${row.jobId || ""}</td>
+<td>${row.jobTitle || ""}</td>
+<td>${row.client || ""}</td>
+<td>${row.industry || ""}</td>
+<td>${row.visa || ""}</td>
+<td>${row.employmentType || ""}</td>
+<td>${row.recruiter || ""}</td>
+<td>${row.payRate || ""}</td>
+<td>${row.billRate || ""}</td>
+<td>${row.experience || ""}</td>
+<td>${row.primarySkills || ""}</td>
+<td>${row.secondarySkills || ""}</td>
+<td>${formatUS(row.submittedDate)}</td>
+<td>${row.submissionStatus || ""}</td>
+<td>${formatUS(row.interviewDate)}</td>
+<td>${row.interviewFeedback || ""}</td>
+<td>${row.note || ""}</td>
+        `;
+
+        body.appendChild(tr);
+    });
+}
+function convertUSToDate(usDate){
+    if(!usDate) return null;
+
+    const parts = usDate.split("/");
+    if(parts.length !== 3) return null;
+
+    const month = parseInt(parts[0]);
+    const day = parseInt(parts[1]);
+    const year = parseInt(parts[2]);
+
+    return new Date(year, month - 1, day);
+}
+document.querySelector("form").addEventListener("submit", function(){
+
+    const input = document.getElementById("submittedDate");
+    const parts = input.value.split("/");
+
+    if(parts.length === 3){
+        const month = parts[0].padStart(2,'0');
+        const day = parts[1].padStart(2,'0');
+        const year = parts[2];
+
+        input.value = month + "/" + day + "/" + year;
+    }
+});
+function formatUS(dateString){
+    if(!dateString) return "";
+
+    const d = new Date(dateString);
+    return (d.getMonth()+1) + "/" + d.getDate() + "/" + d.getFullYear();
+}
+</script>
+</body>
+</html>

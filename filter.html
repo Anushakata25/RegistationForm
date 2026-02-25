@@ -1,0 +1,71 @@
+<script>
+
+let allData = [];
+
+const API_URL = "https://script.google.com/macros/s/AKfycbxpRs5sCUFm17AHUukiB5kCTja9_wKZ5gER5DkO9ZrPqkFoj59WrnxAj36U2tws0P31/exec";
+
+fetch(API_URL)
+.then(res => res.json())
+.then(data => {
+    console.log(data); // check in console
+    allData = data;
+});
+
+
+function filterTable(){
+
+    const search =
+    document.getElementById("searchBox")
+    .value
+    .toLowerCase()
+    .trim();
+
+    const table = document.getElementById("dataTable");
+    const body = document.getElementById("tableBody");
+
+    body.innerHTML = "";
+
+    if(search === ""){
+        table.style.display = "none";
+        return;
+    }
+
+    // search in multiple fields
+    const filtered = allData.filter(row =>
+
+        (row.firstName && row.firstName.toLowerCase().includes(search)) ||
+        (row.lastName && row.lastName.toLowerCase().includes(search)) ||
+        (row.country && row.country.toLowerCase().includes(search)) ||
+        (row.primarySkills && row.primarySkills.toLowerCase().includes(search))
+
+    );
+
+    if(filtered.length === 0){
+        table.style.display = "none";
+        return;
+    }
+
+    table.style.display = "table";
+
+    filtered.forEach(row => {
+
+        const tr = document.createElement("tr");
+
+        tr.innerHTML = `
+            <td>${row.candidateId}</td>
+            <td>${row.firstName} ${row.lastName}</td>
+            <td>${row.country}</td>
+            <td>${row.primarySkills}</td>
+            <td>${row.experience}</td>
+        `;
+
+        body.appendChild(tr);
+
+    });
+
+}
+
+</script>
+
+
+

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+      <title>Signup</title>
+    <style>
+        body {
+              margin: 0;
+              height: 100vh;
+              font-family: Arial;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              background-image: url("bgimage.png");
+              background-repeat: no-repeat;
+              background-size: cover;      /* use ONE value */
+              background-position: center;
+              }
+
+        .box {
+            text-align: center;
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 50px 80px;
+            width: 300px;
+            border-radius: 10px;
+        }
+        input, button {
+            width: 80%;
+            padding: 10px;
+            margin-top: 10px;
+        }
+        button {
+            width: 80%;   
+            padding:15px 
+            margin-top:17px;
+            background: #1a73e8;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        a {
+            display: block;
+            margin-top: 6px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h2>Signup</h2>
+
+    <input type="text" id="signupUser" placeholder="Username">
+    <input type="password" id="signupPass" placeholder="Password">
+
+    <button type="button" onclick="signup()">Signup</button>
+
+    <p id="msg" style="color:green;"></p>
+
+    <a href="loginForm.html">Already have an account? Login</a>
+</div>
+
+<script>
+
+function signup() {
+    var user = document.getElementById("signupUser").value.trim();
+    var pass = document.getElementById("signupPass").value.trim();
+
+    if (user === "" || pass === "") {
+        alert("Please fill all fields");
+        return;
+    }
+
+    fetch("https://script.google.com/macros/s/AKfycbxpRs5sCUFm17AHUukiB5kCTja9_wKZ5gER5DkO9ZrPqkFoj59WrnxAj36U2tws0P31/exec", {
+        method: "POST",
+        body: new URLSearchParams({
+            signup: "true",
+            username: user,
+			password: pass
+        })
+    })
+    .then(res => res.text())
+    .then(response => {
+        if (response === "EXISTS") {
+            document.getElementById("msg").style.color = "red";
+            document.getElementById("msg").innerText = "Username already exists!";
+        } else if (response === "SUCCESS") {
+            document.getElementById("msg").style.color = "green";
+            document.getElementById("msg").innerText = "Signup successful! Go to login.";
+        } else {
+            document.getElementById("msg").style.color = "red";
+            document.getElementById("msg").innerText = "Error! Try again.";
+        }
+    })
+    .catch(err => console.log(err));
+}
+</script>
+
+
+
+</body>
+</html>
